@@ -1,0 +1,19 @@
+[package]
+name = "stackfox/sdk"
+description = "StackFox SDK for Luau"
+version = "0.1.0"
+
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+authors = ["StackFox Team"]
+homepage = "https://stackfox.dev"
+repository = "https://github.com/stackfox-labs/stackfox-sdks"
+
+include = [
+    "src/**/*",
+    "README.md",
+    "LICENSE"
+]
+
+[dependencies]
