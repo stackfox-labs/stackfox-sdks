@@ -19,9 +19,3 @@ Luau SDK:
 Run the checks that exist for the package you touched.
 
 If you change the Luau SDK, also verify that the Wally manifest, Rojo project files, and example place files still match the package layout.
-
-## Expectations
-
-- Keep package-level docs accurate.
-- Prefer small, reviewable changes.
-- Update the root README when repository structure or development workflow changes.
