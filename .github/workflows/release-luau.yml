@@ -1,0 +1,53 @@
+name: Release Luau SDK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release-luau:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rokit & Tools
+        run: |
+          curl -sSf https://raw.githubusercontent.com/rojo-rbx/rokit/main/scripts/install.sh | bash
+          echo "$HOME/.rokit/bin" >> $GITHUB_PATH
+
+      - name: Install dependencies via Rokit
+        working-directory: packages/sdk-luau
+        run: rokit install
+
+      - name: Extract Wally Version
+        id: version
+        working-directory: packages/sdk-luau
+        run: |
+          VERSION=$(grep -oP '^version\s*=\s*"\K[^"]+' wally.toml)
+          echo "extracted version: $VERSION"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Build Rojo Model
+        working-directory: packages/sdk-luau
+        run: rojo build -o stackfox-luau-${{ env.VERSION }}.rbxm
+
+      - name: Publish to Wally
+        working-directory: packages/sdk-luau
+        env:
+          WALLY_TOKEN: ${{ secrets.WALLY_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          wally login --token "$WALLY_TOKEN"
+          wally publish
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: stackfox-luau-${{ env.VERSION }}
+          tag_name: luau-v${{ env.VERSION }}
+          files: packages/sdk-luau/stackfox-luau-${{ env.VERSION }}.rbxm
+          draft: false
+          prerelease: false
+          generate_release_notes: true
