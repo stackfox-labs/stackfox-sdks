@@ -1,5 +1,5 @@
 [package]
-name = "stackfox/sdk-luau"
+name = "stackfox-labs/stackfox"
 description = "StackFox SDK for Luau"
 version = "0.1.0"
 

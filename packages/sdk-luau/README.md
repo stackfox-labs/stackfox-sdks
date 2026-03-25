@@ -1,4 +1,4 @@
-# @stackfox/sdk-luau
+# @stackfox-labs/stackfox
 
 The Luau SDK for StackFox.
 
