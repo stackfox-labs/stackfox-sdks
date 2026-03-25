@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies via Rokit
         working-directory: packages/sdk-luau
-        run: rokit install
+        run: rokit install --no-trust-check
 
       - name: Extract Wally Version
         id: version
